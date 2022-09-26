@@ -1,0 +1,60 @@
+web:
+  upload-path: D:/data/
+spring:
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.upload-path}
+
+  freemarker:
+    allow-request-override: false
+    cache: false
+    check-template-location: true
+    charset: UTF-8
+    content-type: text/html; charset=utf-8
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+    # 模板文件结尾.ftl
+    suffix: .ftl
+    # 模板文件目录
+    template-loader-path: classpath:/templates
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cattleinform?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+  jpa:
+    show-sql: true
+    database: mysql
+    hibernate:
+      ddl-auto: update
+
+
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.test.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+loging:
+  path: D:\DayDayUp\javaEEwork
+
+server:
+  port: 8989
+
+
+
+
+projecturl:
+  ecp: http://127.0.0.1:8989
+      #sell: http://xiang.nat300.top
+    #ssl:
+    #key-store: classpath:pe.cnxfs.com.cn.jks
+    #key-password: 3ut56oahv0y
+  #key-store-type: JKS
+

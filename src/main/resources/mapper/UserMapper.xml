@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.test.dao.UserDao">
+    <resultMap id="UserResultMap" type="com.example.test.entity.Login">
+
+    </resultMap>
+
+
+
+    <insert id="insertCollect"  parameterType="com.example.test.entity.Collect">
+
+    insert into collect
+    (user_id, local_name,collectX,collectY)
+    values
+    (#{user_id,jdbcType=INTEGER},  #{ local_name,jdbcType=VARCHAR } , #{collectX,jdbcType=VARCHAR} , #{collectY,jdbcType=VARCHAR} )
+
+</insert>
+
+    <select id="login" resultMap="UserResultMap" >
+        SELECT * FROM login WHERE username=#{username} AND password=#{password}
+    </select>
+
+    <!-- 通过name查询 -->
+    <select id="findUserinfoByName" resultMap="UserResultMap">
+    select *
+    from login
+    where username=#{username}
+    </select>
+    <!-- 通过id查询收藏地址 -->
+    <select id="findCollectById" resultType="Map">
+    select *
+    from collect
+    where user_id=#{user_id}
+    </select>
+
+    <!-- 查找所有类型 -->
+    <select id="findCategory" resultType="Map">
+    select *
+    from category
+    </select>
+
+    <!-- 根据CategoryId来查找所有收藏 -->
+    <select id="findCollectByCategory" resultType="Map">
+     select *
+    from collect a join category b on a.category_id=b.id
+    where a.category_id=#{category_id}
+    </select>
+
+    <!-- 查找所有资讯 -->
+    <select id="findAllNews" resultType="Map">
+     select *
+    from news
+    </select>
+    <!-- 根据资讯id查找该资讯的对应配图 -->
+    <select id="findImgByNewsid" resultType="Map">
+       select *
+    from news_thumb
+    where news_id=#{news_id}
+    </select>
+
+    <!-- 根据collcer的id修改对应的local_coord -->
+    <update id="updateCollectById" >
+       update collect
+    set category_id=#{category_id}
+    where id=#{id}
+    </update>
+
+    <!-- 根据collect id查找collect -->
+    <select id="findCollectByKey" resultType="com.example.test.entity.Collect">
+       select *
+    from collect
+    where id=#{id}
+    </select>
+
+    <!-- 通过proID查地名 -->
+    <select id="findPro" resultType="Map">
+    select proName
+    from promary
+    </select>
+    <!-- 根据proID查找某省的市 -->
+    <select id="findAreaById" resultType="Map">
+    select *
+    from city
+    where proID=#{proID}
+    </select>
+    <!-- 根据安卓用户id查找该用户的权限城市 -->
+    <select id="findCityByLimit" resultType="Map">
+ select cityName from city where proID=#{proID} and cityID = any(select city_id from ecolimit where user_id
+    =#{userId})
+    </select>
+
+    <!-- 根据cityid查询cityname用于存在limit表里 -->
+    <select id="findCityName" resultType="Map">
+ select cityName from city where proID=#{proID} and cityID = #{cityID}
+    </select>
+
+</mapper>
