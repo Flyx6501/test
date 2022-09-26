@@ -19,6 +19,5 @@ public enum RedlineStatusEnum implements CodeEnum{
     @Override
     public String getMsg() {
         return null;
-
     }
 }
